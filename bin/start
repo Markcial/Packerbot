@@ -1,0 +1,4 @@
+#!/bin/sh
+docker build -t packerbot .
+docker run --privileged -d --name docker-server docker:1.8-dind
+docker run --rm --link docker-server:docker -v $SSH_AUTH_SOCK:/var/run/ssh.sock -v $(pwd)/src:/usr/local/lib/packerbot -e SSH_AUTH_SOCK=/var/run/ssh.sock --name packerbot -it packerbot sh
